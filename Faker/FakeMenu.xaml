@@ -1,0 +1,34 @@
+﻿<Page x:Class="Faker.FakeMenu"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Faker"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="FakeMenu">
+
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="TableName"/>
+                <Label Content="TableName"/>
+                <Label Content="TableName"/>
+            </StackPanel>            
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Name="Columns"/>
+            </ScrollViewer>
+        </StackPanel>
+        
+        <Border Grid.Column="1" BorderBrush="black" BorderThickness="1">
+            <ScrollViewer  VerticalScrollBarVisibility="Auto">
+                <StackPanel Name="TablesDisplay"/>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Page>
