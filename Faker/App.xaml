@@ -40,6 +40,7 @@
         </Style>
 
         <Style x:Key="NoButtonHoover" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand" />
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="Template">
                 <Setter.Value>

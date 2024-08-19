@@ -15,11 +15,10 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="TableName"/>
-                <Label Content="TableName"/>
-                <Label Content="TableName"/>
-            </StackPanel>            
+            <UniformGrid Columns="2">
+                <Label Content="TableName" BorderThickness="0,0,0,1" BorderBrush="Black" Margin="5"/>
+                <Button Content="Home" Style="{StaticResource DefaultButtonStyle}" Margin="5" HorizontalAlignment="Right"/>
+            </UniformGrid>            
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Name="Columns"/>
             </ScrollViewer>

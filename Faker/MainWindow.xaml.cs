@@ -26,7 +26,7 @@ namespace Faker
                     Controller.RefreshDatabaseConnection();
                     if (Controller.CanConnectToDatabase())
                     {
-                        Navigation.MainContent.Content = new FakeMenu();
+                        Navigation.MainContent.Content = new HomePage();
                     }
                     else
                     {

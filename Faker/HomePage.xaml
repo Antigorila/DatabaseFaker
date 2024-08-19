@@ -1,0 +1,51 @@
+﻿<Page x:Class="Faker.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Faker"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="HomePage">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border BorderThickness="3" BorderBrush="Black">
+            <Grid Background="#FF5D5D5D">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="FakeData" Grid.Column="0" Content="Fake Data" Style="{StaticResource DefaultButtonStyle}" Margin="5" BorderThickness="2" Click="FakeData_Click"/>
+                <Button Name="ManageDummy" Grid.Column="1" Content="Manage Dummy" Style="{StaticResource DefaultButtonStyle}" Margin="5" BorderThickness="2" Click="ManageDummy_Click"/>
+                <Button Name="ManageDatabase" Grid.Column="2" Content="Manage Database" Style="{StaticResource DefaultButtonStyle}" Margin="5" BorderThickness="2" Click="ManageDatabase_Click"/>
+                <Button Name="Refresh" Grid.Column="3" Width="30" Margin="5" Click="Refresh_Click" Style="{StaticResource NoButtonHoover}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/reload.png"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="3" Width="400" Height="200" CornerRadius="10" >
+            <StackPanel>
+                <Label Content="Databaser Name" Name="DatabaseName" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="0,0,0,2"/>
+                <UniformGrid Columns="2">
+                    <Label Content="Version" Height="40" BorderBrush="Black" BorderThickness="0,0,0,1" VerticalContentAlignment="Center"/>
+                    <Label Name="Version" Height="40" BorderBrush="Black" BorderThickness="0,0,0,1" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                    <Label Content="Size" Height="40" BorderBrush="Black" BorderThickness="0,0,0,1" VerticalContentAlignment="Center"/>
+                    <Label Name="Size" Height="40" BorderBrush="Black" BorderThickness="0,0,0,1" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                    <Label Content="Tables Count" Height="40" BorderBrush="Black" BorderThickness="0,0,0,1" VerticalContentAlignment="Center"/>
+                    <Label Name="TablesCount" Height="40" BorderBrush="Black" BorderThickness="0,0,0,1" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                    <Label Content="Uptime" Height="40" BorderBrush="Black" BorderThickness="0,0,0,1" VerticalContentAlignment="Center"/>
+                    <Label Name="UpTime" Height="40" BorderBrush="Black" BorderThickness="0,0,0,1" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                </UniformGrid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

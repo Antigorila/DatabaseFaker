@@ -24,7 +24,11 @@ namespace Faker
 
             if (File.Exists("database.txt"))
             {
-                //TODO: Do this...
+                Datasource.Text = Controller.DatabaseTxt()[0];
+                Port.Text = Controller.DatabaseTxt()[1];
+                Username.Text = Controller.DatabaseTxt()[2];
+                Password.Text = Controller.DatabaseTxt()[3];
+                DatabaseName.Text = Controller.DatabaseTxt()[4];
             }
         }
 
@@ -51,6 +55,7 @@ namespace Faker
             }
 
             Controller.WriteDatabaseTxt(Datasource.Text, Port.Text, Username.Text, Password.Text, DatabaseName.Text);
+            Navigation.MainContent.Content = new HomePage();
         }
 
         private bool ValidateInputData(TextBox textbox, string format)
