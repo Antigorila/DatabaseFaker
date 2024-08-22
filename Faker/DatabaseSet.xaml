@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DatabaseSet">
-    <Grid Background="White">
+    <Grid>
         <StackPanel Margin="0,20,0,0">
             <Label Content="Database settings" Style="{StaticResource DefaultLabelStyle}" HorizontalContentAlignment="Center"/>
             <UniformGrid Columns="2" Width="525">

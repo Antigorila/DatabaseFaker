@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="HomePage">
-    <Grid Background="White">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -26,13 +26,13 @@
                 <Button Name="ManageDatabase" Grid.Column="2" Content="Manage Database" Style="{StaticResource DefaultButtonStyle}" Margin="5" BorderThickness="2" Click="ManageDatabase_Click"/>
                 <Button Name="Refresh" Grid.Column="3" Width="30" Margin="5" Click="Refresh_Click" Style="{StaticResource NoButtonHoover}">
                     <Button.Background>
-                        <ImageBrush ImageSource="/reload.png"/>
+                        <ImageBrush ImageSource="/refresh-arrow.png"/>
                     </Button.Background>
                 </Button>
             </Grid>
         </Border>
 
-        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="3" Width="400" Height="200" CornerRadius="10" >
+        <Border Background="White" Grid.Row="1" BorderBrush="Black" BorderThickness="3" Width="400" Height="200" CornerRadius="10" >
             <StackPanel>
                 <Label Content="Databaser Name" Name="DatabaseName" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="0,0,0,2"/>
                 <UniformGrid Columns="2">

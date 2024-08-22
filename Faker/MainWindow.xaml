@@ -8,6 +8,6 @@
         ResizeMode="NoResize"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Frame Name="MainContent" NavigationUIVisibility="Hidden"/>
+        <Frame Name="MainContent" NavigationUIVisibility="Hidden" Background="#FF2D2D2D"/>
     </Grid>
 </Window>

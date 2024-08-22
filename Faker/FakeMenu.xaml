@@ -8,26 +8,43 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="FakeMenu">
 
-    <Grid Background="White">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel>
-            <UniformGrid Columns="2">
-                <Label Content="TableName" BorderThickness="0,0,0,1" BorderBrush="Black" Margin="5"/>
-                <Button Content="Home" Style="{StaticResource DefaultButtonStyle}" Margin="5" HorizontalAlignment="Right"/>
-            </UniformGrid>            
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel Name="Columns"/>
-            </ScrollViewer>
-        </StackPanel>
-        
-        <Border Grid.Column="1" BorderBrush="black" BorderThickness="1">
-            <ScrollViewer  VerticalScrollBarVisibility="Auto">
-                <StackPanel Name="TablesDisplay"/>
-            </ScrollViewer>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="3" BorderBrush="Black">
+            <Grid Background="#FF5D5D5D">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="Home" Grid.Column="0" Content="Home" Style="{StaticResource DefaultButtonStyle}" Margin="5" BorderThickness="2" Click="Home_Click"/>
+                <Button Name="ManageDummy" Grid.Column="1" Content="Manage Dummy" Style="{StaticResource DefaultButtonStyle}" Margin="5" BorderThickness="2" Click="ManageDummy_Click"/>
+                <Button Name="ManageDatabase" Grid.Column="2" Content="Manage Database" Style="{StaticResource DefaultButtonStyle}" Margin="5" BorderThickness="2" Click="ManageDatabase_Click"/>
+                <Button Name="Refresh" Grid.Column="3" Width="30" Margin="5" Click="Refresh_Click" Style="{StaticResource NoButtonHoover}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/refresh-arrow.png"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
         </Border>
+
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="2,0,0,0"/>
+
+        <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Name="Columns"/>
+        </ScrollViewer>
+
+        <ScrollViewer  VerticalScrollBarVisibility="Visible" Grid.Row="1" Grid.Column="1">
+            <StackPanel Name="TablesDisplay"/>
+        </ScrollViewer>
     </Grid>
 </Page>

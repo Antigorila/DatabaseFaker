@@ -21,6 +21,7 @@ namespace Faker
         {
             InitializeComponent();
             DisplayAllTablesOnScrollViewer();
+            DisplayAllColumnsToOneTable(SQL.Tables()[0]);
         }
 
         private void DisplayOneTableOnScrollViewer(string TableName)
@@ -28,9 +29,11 @@ namespace Faker
             Border border = new Border
             {
                 BorderBrush = Brushes.Black,
-                BorderThickness = new Thickness(1),
+                Background = Brushes.White,
+                BorderThickness = new Thickness(2),
                 Height = 40,
-                Margin = new Thickness(5)
+                Margin = new Thickness(5),
+                CornerRadius = new CornerRadius(5),
             };
 
             Grid grid = new Grid();
@@ -77,8 +80,10 @@ namespace Faker
             Border mainBorder = new Border
             {
                 BorderBrush = Brushes.Black,
-                BorderThickness = new Thickness(1),
-                Margin = new Thickness(10)
+                Background = Brushes.White,
+                BorderThickness = new Thickness(2),
+                Margin = new Thickness(10),
+                CornerRadius = new CornerRadius(10),
             };
 
             StackPanel mainStackPanel = new StackPanel();
@@ -98,11 +103,10 @@ namespace Faker
 
             Label columnNameLabel = new Label
             {
-                Content = ColumnName,
+                Content = $"{ColumnName}:",
                 Margin = new Thickness(5, 5, 0, 5),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 BorderBrush = Brushes.Black,
-                BorderThickness = new Thickness(0, 0, 1, 0)
             };
 
             Label dataTypeLabel = new Label
@@ -178,9 +182,45 @@ namespace Faker
 
             Columns.Children.Add(mainBorder);
         }
+        private void DisplayHeaderToColumn(string TableName)
+        {
+            Grid grid = new Grid();
+
+            ColumnDefinition column1 = new ColumnDefinition();
+            column1.Width = new GridLength(1, GridUnitType.Star);
+            grid.ColumnDefinitions.Add(column1);
+
+            ColumnDefinition column2 = new ColumnDefinition();
+            column2.Width = GridLength.Auto;
+            grid.ColumnDefinitions.Add(column2);
+
+            Label label = new Label();
+            label.Content = TableName;
+            label.HorizontalContentAlignment = HorizontalAlignment.Center;
+            label.BorderBrush = Brushes.Black;
+            label.Margin = new Thickness(5,5,0,5);
+            label.Foreground = Brushes.White;
+            label.BorderThickness = new Thickness(0, 0, 0, 2);
+            label.BorderBrush = Brushes.Black;
+            grid.Children.Add(label);
+            Grid.SetColumn(label, 0);
+
+            Button button = new Button
+            {
+                Content = "Run",
+                Style = (Style)FindResource("DefaultButtonStyle"),
+                Margin = new Thickness(0,5,5,5),
+                BorderThickness = new Thickness(2)
+            };
+            grid.Children.Add(button);
+            Grid.SetColumn(button, 1);
+
+            Columns.Children.Add(grid);
+        }
         private void DisplayAllColumnsToOneTable(string TableName)
         {
             Columns.Children.Clear();
+            DisplayHeaderToColumn(TableName);
             List<string[]> ColumnsList = SQL.Query($"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '{SQL.database}' AND TABLE_NAME = '{TableName}';");
             for (int i = 0; i < ColumnsList.Count; i++)
             {
@@ -194,6 +234,28 @@ namespace Faker
             {
                 DisplayAllColumnsToOneTable((sender as Button).Tag.ToString());
             }
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.MainContent.Content = new FakeMenu();
+        }
+
+        private void ManageDummy_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Do this...
+            throw new NotImplementedException();
+        }
+
+        private void Home_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.MainContent.Content = new HomePage();
+        }
+
+        private void ManageDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Do this... Its good basically but no back button...
+            Navigation.MainContent.Content = new DatabaseSet();
         }
     }
 }
