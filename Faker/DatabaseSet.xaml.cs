@@ -100,8 +100,7 @@ namespace Faker
 
         private void ManageDummy_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Do this...
-            throw new NotImplementedException();
+            Navigation.MainContent.Content = new ManageDummyPage();
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)

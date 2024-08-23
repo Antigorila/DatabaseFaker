@@ -349,8 +349,7 @@ namespace Faker
 
         private void ManageDummy_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Do this...
-            throw new NotImplementedException();
+            Navigation.MainContent.Content = new ManageDummyPage();
         }
 
         private void Home_Click(object sender, RoutedEventArgs e)
@@ -360,7 +359,6 @@ namespace Faker
 
         private void ManageDatabase_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Do this... Its good basically but no back button...
             Navigation.MainContent.Content = new DatabaseSet();
         }
     }
