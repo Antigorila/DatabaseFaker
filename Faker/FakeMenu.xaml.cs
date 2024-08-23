@@ -15,13 +15,32 @@ using System.Windows.Shapes;
 
 namespace Faker
 {
+    enum ColumnProperties
+    {
+        DummyType,
+        IsIncluded
+    }
     public partial class FakeMenu : Page
     {
+        class Column
+        {
+            public string Name { get; set; }
+            public string DummyType { get; set; }
+            public bool IsIncluded { get; set; }
+
+            public Column(string Name)
+            {
+                this.Name = Name;
+            }
+        }
+        private List<Column> ColumnList = new List<Column>();
+        private TextBox Quantity;
         public FakeMenu()
         {
             InitializeComponent();
             DisplayAllTablesOnScrollViewer();
             DisplayAllColumnsToOneTable(SQL.Tables()[0]);
+            RefreshColumnList(SQL.Tables()[0]);
         }
 
         private void DisplayOneTableOnScrollViewer(string TableName)
@@ -64,7 +83,6 @@ namespace Faker
 
             TablesDisplay.Children.Add(border);
         }
-
         private void DisplayAllTablesOnScrollViewer()
         {
             TablesDisplay.Children.Clear();
@@ -74,7 +92,6 @@ namespace Faker
                 DisplayOneTableOnScrollViewer(Tables[i]);
             }
         }
-
         private void DisplayOneColumn(string ColumnName, string ColumnType)
         {
             Border mainBorder = new Border
@@ -138,22 +155,15 @@ namespace Faker
             ComboBox dummyComboBox = new ComboBox
             {
                 Margin = new Thickness(5),
-                Width = 150
+                Width = 150,
+                Tag = ColumnName
             };
-
-            Label quantityLabel = new Label
-            {
-                Content = "Quantity",
-                Margin = new Thickness(5),
-                BorderBrush = Brushes.Black,
-                BorderThickness = new Thickness(1, 0, 0, 0)
-            };
-
-            TextBox quantityTextBox = new TextBox
-            {
-                Margin = new Thickness(5),
-                Width = 75
-            };
+            dummyComboBox.SelectedIndex = 0;
+            dummyComboBox.SelectionChanged += SetDummy;
+            dummyComboBox.Items.Add("item 1");
+            dummyComboBox.Items.Add("item 2");
+            dummyComboBox.Items.Add("item 3");
+            dummyComboBox.Items.Add("item 4");
 
             Label includeLabel = new Label
             {
@@ -166,13 +176,14 @@ namespace Faker
             CheckBox includeCheckBox = new CheckBox
             {
                 Margin = new Thickness(5),
-                VerticalAlignment = VerticalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center,
+                Tag = ColumnName
             };
+            includeCheckBox.Checked += Column_Checked;
+            includeCheckBox.Unchecked += Column_Unchecked;
 
             bottomStackPanel.Children.Add(dummyTypeLabel);
             bottomStackPanel.Children.Add(dummyComboBox);
-            bottomStackPanel.Children.Add(quantityLabel);
-            bottomStackPanel.Children.Add(quantityTextBox);
             bottomStackPanel.Children.Add(includeLabel);
             bottomStackPanel.Children.Add(includeCheckBox);
 
@@ -194,6 +205,10 @@ namespace Faker
             column2.Width = GridLength.Auto;
             grid.ColumnDefinitions.Add(column2);
 
+            ColumnDefinition column3 = new ColumnDefinition();
+            column3.Width = GridLength.Auto;
+            grid.ColumnDefinitions.Add(column3);
+
             Label label = new Label();
             label.Content = TableName;
             label.HorizontalContentAlignment = HorizontalAlignment.Center;
@@ -205,6 +220,29 @@ namespace Faker
             grid.Children.Add(label);
             Grid.SetColumn(label, 0);
 
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.Orientation = Orientation.Horizontal;
+            stackPanel.Margin = new Thickness(0, 5, 0, 5);
+
+            Label label1 = new Label();
+            label1.Content = "Quantity: ";
+            label1.Foreground = Brushes.White;
+            label1.BorderThickness = new Thickness(0, 0, 0, 2);
+            label1.BorderBrush = Brushes.Black;
+
+            stackPanel.Children.Add(label1);
+
+            TextBox textBox = new TextBox();
+            textBox.Width = 100;
+            textBox.VerticalContentAlignment = VerticalAlignment.Center;
+            textBox.BorderThickness = new Thickness(2);
+            textBox.BorderBrush = Brushes.Black;
+            stackPanel.Children.Add(textBox);
+            Quantity = textBox;
+
+            grid.Children.Add(stackPanel);
+            Grid.SetColumn(stackPanel, 1);
+
             Button button = new Button
             {
                 Content = "Run",
@@ -212,8 +250,9 @@ namespace Faker
                 Margin = new Thickness(0,5,5,5),
                 BorderThickness = new Thickness(2)
             };
+            button.Click += Run_Click;
             grid.Children.Add(button);
-            Grid.SetColumn(button, 1);
+            Grid.SetColumn(button, 2);
 
             Columns.Children.Add(grid);
         }
@@ -227,12 +266,79 @@ namespace Faker
                 DisplayOneColumn(ColumnsList[i][0], ColumnsList[i][1]);
             }
         }
+        private void SetDummy(object sender, RoutedEventArgs e)
+        {
+            if (sender != null)
+            {
+                ComboBox DummyComboBox = sender as ComboBox;
+                if (DummyComboBox.SelectedIndex != 0)
+                {
+                    SetColumnProperty(DummyComboBox.Tag.ToString(), ColumnProperties.DummyType, DummyComboBox.SelectedItem);
+                }
+            }
+        }
+        private void Run_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < ColumnList.Count; i++)
+            {
+                if (ColumnList[i].IsIncluded && ColumnList[i].DummyType == string.Empty)
+                {
+                    MessageBox.Show("There must be a selected Dummy Type at all included column!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
 
+            //TODO: Do the Dummy upload
+            //Remeber ther is a Quantity TextBox
+        }
+        private void Column_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender != null)
+            {
+                SetColumnProperty((sender as CheckBox).Tag.ToString(), ColumnProperties.IsIncluded, true);
+            }
+        }
+        private void Column_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender != null)
+            {
+                SetColumnProperty((sender as CheckBox).Tag.ToString(), ColumnProperties.IsIncluded, false);
+            }
+        }
+        private void SetColumnProperty(string ColumnName, ColumnProperties ColumnProperty, object Value)
+        {
+            for (int i = 0; i < ColumnList.Count; i++)
+            {
+                if (ColumnList[i].Name == ColumnName)
+                {
+                    switch (ColumnProperty)
+                    {
+                        case ColumnProperties.DummyType:
+                            ColumnList[i].DummyType = Value.ToString();
+                            break;
+                        case ColumnProperties.IsIncluded:
+                            ColumnList[i].IsIncluded = (bool)Value;
+                            break;
+                    }
+                }
+            }
+        }
+        private void RefreshColumnList(string TableName) 
+        {
+            ColumnList.Clear();
+            List<string[]> ColumnsNameList = SQL.Query($"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '{SQL.database}' AND TABLE_NAME = '{TableName}';");
+            for (int i = 0; i < ColumnsNameList.Count; i++)
+            {
+                ColumnList.Add(new Column(ColumnsNameList[i][0]));
+            }
+        }
         private void SelectTable(object sender, RoutedEventArgs e)
         {
             if (sender != null)
             {
-                DisplayAllColumnsToOneTable((sender as Button).Tag.ToString());
+                string TableName = (sender as Button).Tag.ToString();
+                RefreshColumnList(TableName);
+                DisplayAllColumnsToOneTable(TableName);
             }
         }
 

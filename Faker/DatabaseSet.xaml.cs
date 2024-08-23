@@ -32,7 +32,7 @@ namespace Faker
             }
         }
 
-        private void Done_Click(object sender, RoutedEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
             if (! ValidateInputData(Datasource, "127.0.0.1"))
             {
@@ -86,6 +86,27 @@ namespace Faker
             }
 
             return false;
+        }
+
+        private void FakeData_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.MainContent.Content = new FakeMenu();
+        }
+
+        private void Home_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.MainContent.Content = new HomePage();
+        }
+
+        private void ManageDummy_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Do this...
+            throw new NotImplementedException();
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            Navigation.MainContent.Content = new DatabaseSet();
         }
     }
 }
