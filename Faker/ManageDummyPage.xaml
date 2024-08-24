@@ -61,16 +61,15 @@
             <Border Background="Black" BorderBrush="Black" BorderThickness="2" CornerRadius="5" Margin="15,0,15,15">
                 <StackPanel>
                     <Label Content="Description:" Foreground="White"/>
-                    <TextBlock x:Name="Description"  Height="50"  Background="#FFE0E0E0" Margin="2" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="Description" Height="50" Background="#FFE0E0E0" Margin="2" TextWrapping="Wrap"/>
+                    <!--- Max 230 char -->
                 </StackPanel>
             </Border>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" x:Name="Footer" Grid.Row="2" HorizontalAlignment="Center" IsEnabled="False">
-            <Button Content="Modify dummy" Style="{StaticResource DefaultButtonStyle}" Margin="5"/>
-            <Button Content="Delete dummy" Style="{StaticResource DefaultButtonStyle}" Margin="5"/>
-            <Button Content="Add new dummy" Style="{StaticResource DefaultButtonStyle}" Margin="5"/>
+        <StackPanel Orientation="Horizontal" x:Name="Footer" Grid.Row="2" HorizontalAlignment="Center">
+            <Button x:Name="DeleteDummy" Content="Delete dummy" Style="{StaticResource DefaultButtonStyle}" Margin="5" Click="DeleteDummy_Click"/>
+            <Button x:Name="AddNewDummy" Content="Add new dummy" Style="{StaticResource DefaultButtonStyle}" Margin="5" Click="AddNewDummy_Click"/>
         </StackPanel>
-
     </Grid>
 </Page>

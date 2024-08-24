@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="copy.png" />
     <None Remove="refresh-arrow.png" />
     <None Remove="reload.png" />
   </ItemGroup>
@@ -18,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="copy.png" />
     <Resource Include="refresh-arrow.png" />
     <Resource Include="reload.png" />
   </ItemGroup>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,17 +12,60 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using System.Text.Json;
 
 namespace Faker
 {
-    /// <summary>
-    /// Interaction logic for AddNewCategory.xaml
-    /// </summary>
     public partial class AddNewCategory : Window
     {
         public AddNewCategory()
         {
             InitializeComponent();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (TypeName.Text == string.Empty)
+            {
+                MessageBox.Show("The type must have a name!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (Description.Text == string.Empty)
+            {
+                MessageBox.Show("The type must ha a description!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (IsTypeAlreadyExist(TypeName.Text))
+            {
+                MessageBox.Show("This type is already existing!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            DummyType newType = new DummyType(TypeName.Text, Description.Text);
+            newType.Create();
+            MessageBox.Show("The new type has been created!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
+        }
+
+        private bool IsTypeAlreadyExist(string TypeName)
+        {
+            for (int i = 0; i < Controller.DummyTypes().Count; i++)
+            {
+                if (Controller.DummyTypes()[i].Name == TypeName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Faker
@@ -49,6 +50,7 @@ namespace Faker
 
             return true;
         }
+        public static Exception error;
 
         public static bool CanConnectToDatabase()
         {
@@ -56,8 +58,9 @@ namespace Faker
             {
                 SQL.Query("SELECT VERSION()");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                error = ex;
                 return false;
             }
 
@@ -120,6 +123,40 @@ namespace Faker
 
             SQL.connectionstring = $"datasource={SQL.datasource};port={SQL.port};username={SQL.username};password={SQL.password};database={SQL.database};";
             SQL.con = new MySqlConnection(SQL.connectionstring);
+        }
+
+        public static List<DummyType> DummyTypes()
+        {
+            List<DummyType> types = new List<DummyType>();
+            string filePath = "dummies/types.json";
+            if (File.Exists(filePath))
+            {
+                string jsonString = File.ReadAllText(filePath);
+
+                if (!string.IsNullOrWhiteSpace(jsonString))
+                { 
+                    types = JsonSerializer.Deserialize<List<DummyType>>(jsonString);
+                }
+            }
+            else
+            {
+                File.Create("dummies/types.json");
+            }
+
+            return types;
+        }
+
+        public static DummyType GetTypeByName(string name)
+        {
+            for (int i = 0; i < DummyTypes().Count; i++)
+            {
+                if (DummyTypes()[i].Name == name)
+                {
+                    return DummyTypes()[i];
+                }
+            }
+
+            return null;
         }
     }
 }

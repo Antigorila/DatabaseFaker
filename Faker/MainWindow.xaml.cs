@@ -30,8 +30,10 @@ namespace Faker
                     }
                     else
                     {
-                        //TODO: Do some page where the dear user can wait and spam a Connect againg button until the program can connect to the database
-                        MessageBox.Show("Can not connect to database!", "Error", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ////TODO: Do some page where the dear user can wait and spam a Connect againg button until the program can connect to the database
+                        //MessageBox.Show("Can not connect to database!", "Error", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        Navigation.MainContent.Content = new ServerConnectionErrorPage(this);
                     }
                 }
                 else
