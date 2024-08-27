@@ -32,10 +32,29 @@ namespace Faker
                 return;
             }
 
+            if (IsDataAlreadyExist())
+            {
+                MessageBox.Show("This data already exists, come up with something else.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             DummyData newDummyData = new DummyData(Type, Data.Text);
             newDummyData.Create();
             MessageBox.Show("Data has been created!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
+        }
+
+        private bool IsDataAlreadyExist()
+        {
+            for (int i = 0; i < Type.GetAllData().Count; i++)
+            {
+                if (Type.GetAllData()[i].Data == Data.Text)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

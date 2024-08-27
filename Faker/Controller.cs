@@ -143,6 +143,14 @@ namespace Faker
                 File.Create("dummies/types.json");
             }
 
+            DummyType Number = new DummyType("Number", "With this DummyType you can generate numbers between numbers or just random nubers.");
+            DummyType Word = new DummyType("Word", "With this DummyType you can generate a word or words with by givin a word or a char count to it.");
+            DummyType ForeginID = new DummyType("ForeginID", "With this DummyType you can generate a ForeginID to a different table.");
+
+            types.Add(Number);
+            types.Add(Word);
+            types.Add(ForeginID);
+
             return types;
         }
 

@@ -54,7 +54,16 @@ namespace Faker
             string updatedJsonString = JsonSerializer.Serialize(newDatas, options);
             File.WriteAllText(filePath, updatedJsonString);
         }
-        public List<DummyData> GetData()
+        public DummyData GetOneRandomData()
+        {
+            Random rng = new Random();
+            return GetAllData()[rng.Next(0, GetAllData().Count)];
+        }
+        public DummyData GetOneRandomData(int index)
+        {
+            return GetAllData()[index];
+        }
+        public List<DummyData> GetAllData()
         {
             List<DummyData> data = new List<DummyData>();
             string filePath = $"dummies/{this.Name}.json";

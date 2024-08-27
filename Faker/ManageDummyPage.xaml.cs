@@ -89,11 +89,11 @@ namespace Faker
             SelectedType = Type;
             Description.Text = Type.Description;
 
-            for (int i = 0; i < SelectedType.GetData().Count; i++)
+            for (int i = 0; i < SelectedType.GetAllData().Count; i++)
             {
                 ListBoxItem listBoxItem = new ListBoxItem();
-                listBoxItem.Tag = SelectedType.GetData()[i];
-                listBoxItem.Content = SelectedType.GetData()[i].Data;
+                listBoxItem.Tag = SelectedType.GetAllData()[i];
+                listBoxItem.Content = SelectedType.GetAllData()[i].Data;
 
                 DataDisplay.Items.Add(listBoxItem);
             }
@@ -131,7 +131,7 @@ namespace Faker
             {
                 AddDummyData addDummyData = new AddDummyData(SelectedType.Name);
                 addDummyData.ShowDialog();
-                Navigation.MainContent.Content = new ManageDummyPage();
+                DisplayPropertiesOfType(SelectedType);
             }
         }
 
